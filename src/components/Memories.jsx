@@ -14,7 +14,7 @@ export default function Memories() {
             {isLoading && <h1>Loading...</h1>}
             <div className="grid grid-cols-2 gap-8 pb-8">
                 {memories.length > 0 ? memories.map((memo, ind) => (
-                    <Card key={ind} />
+                    <Card key={ind} memo={memo} />
                 )) : <>
                     <p>Oops, memories have not created yet!</p>
                 </>}
