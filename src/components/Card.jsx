@@ -2,18 +2,26 @@ import { BiSolidLike } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { formatDateTime } from "../lib/utils";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 
 export default function Card({ memo }) {
+    const {
+        setNewMemory,
+        handleDeleteMemory
+    } = useContext(Context);
+
     return (
         <div className="w-[320px] overflow-hidden rounded-2xl shadow-md bg-white">
             <div className="relative cursor-pointer">
                 <div className="w-full absolute z-20 flex items-center justify-between text-white p-4">
                     <div className="flex flex-col gap-1">
                         <h1 className="text-xl font-semibold">{memo?.creator}</h1>
-                        <p className="text-sm">2 months ago</p>
+                        {/* <p className="text-sm">{formatDateTime(memo?.createdAt.toDate()).dateTime}</p> */}
                     </div>
 
-                    <button>
+                    <button onClick={() => setNewMemory(memo)}>
                         <BsThreeDots />
                     </button>
                 </div>
@@ -30,7 +38,7 @@ export default function Card({ memo }) {
 
             <div className="flex flex-col gap-3 p-4">
                 <div className="flex items-center gap-2 text-gray-500">
-                    {memo?.tags?.map((tag, ind) => (<p key={ind}>#{tag}</p>))}
+                    {/* {memo?.tags?.map((tag, ind) => (<p key={ind}>#{tag}</p>))} */}
                 </div>
 
                 <h1 className="text-2xl my-2">{memo?.title}</h1>
@@ -43,7 +51,7 @@ export default function Card({ memo }) {
                         <span>Like: </span>
                         <span>{memo?.likeCount}</span>
                     </button>
-                    <button className="flex items-center gap-1 uppercase text-blue-500">
+                    <button onClick={() => handleDeleteMemory(memo?.id)} className="flex items-center gap-1 uppercase text-blue-500">
                         <MdDelete />
                         <span>Delete</span>
                     </button>

@@ -24,7 +24,7 @@ export default function Details() {
                 // check if the document exists
                 setMemory(snapshot.data());
             } catch (error) {
-                console.log("Bitta ma'lumotni serverdan olishda xatolik yuz berdi: ", error);
+                console.log("Error getting one document: ", error);
                 setIsError(error);
             } finally {
                 setIsLoading(false);

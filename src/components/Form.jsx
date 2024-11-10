@@ -1,11 +1,24 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { Context } from "../context/Context"
+import { addDoc, collection } from "firebase/firestore";
+import { projectStore } from "../firebase/config";
 
 export default function Form() {
-    const { handleSubmit } = useContext(Context);
+    const {
+        newMemory,
+        setNewMemory,
+        handleAddAndUpdateMemory,
+    } = useContext(Context);
+
+    const getInputValue = (e) => {
+        setNewMemory({
+            ...newMemory,
+            [e.target.name]: e.target.value
+        })
+    }
 
     return (
-        <form onSubmit={handleSubmit} className="w-[350px] sticky top-8 flex flex-col gap-2 rounded-md p-4 bg-white">
+        <form onSubmit={handleAddAndUpdateMemory} className="w-[350px] sticky top-8 flex flex-col gap-2 rounded-md p-4 bg-white">
             <h1 className="text-center text-2xl mb-2">Creating a Memory</h1>
 
             <input
@@ -14,6 +27,8 @@ export default function Form() {
                 placeholder="Creator"
                 className="w-full text-lg outline-heading p-3 rounded-md border border-gray-500"
                 required
+                value={newMemory.creator}
+                onChange={getInputValue}
             />
 
             <input
@@ -22,6 +37,8 @@ export default function Form() {
                 placeholder="Title"
                 className="w-full text-lg outline-heading p-3 rounded-md border border-gray-500"
                 required
+                value={newMemory.title}
+                onChange={getInputValue}
             />
 
             <textarea
@@ -30,14 +47,18 @@ export default function Form() {
                 rows={3}
                 className="w-full text-lg outline-heading p-3 rounded-md border resize-none border-gray-500"
                 required
+                value={newMemory.message}
+                onChange={getInputValue}
             />
 
             <input
                 type="text"
                 name="tags"
-                placeholder="Tags"
+                placeholder="art, memory, fun"
                 className="w-full text-lg outline-heading p-3 rounded-md border border-gray-500"
                 required
+                value={newMemory.tags}
+                onChange={getInputValue}
             />
 
             <button
